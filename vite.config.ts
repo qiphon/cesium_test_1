@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import path from 'path'
 
 const cesiumSource = 'node_modules/cesium/Build/Cesium'
 // This is the base url for static files that CesiumJS needs to load.
@@ -13,6 +14,11 @@ export default defineConfig({
     // Define relative base path in cesium for loading assets
     // https://vitejs.dev/config/shared-options.html#define
     CESIUM_BASE_URL: JSON.stringify(`/${cesiumBaseUrl}`),
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   plugins: [
     react(),
@@ -28,5 +34,6 @@ export default defineConfig({
   server: {
     port: 8000,
     open: true,
+    hmr: true,
   },
 })
